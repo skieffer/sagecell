@@ -231,7 +231,7 @@ function init(cellInfo, k) {
     var output = $(cellInfo.outputLocation);
     var langSelect = input.find(".sagecell_language select");
     //var files = [];
-    var temp = editor.render(cellInfo.editor, input, cellInfo.collapse);
+    var temp = editor.render(cellInfo, input, cellInfo.collapse);
     var editorType = temp[0];
     var editorData = temp[1];
     cellInfo.editorData = editorData;

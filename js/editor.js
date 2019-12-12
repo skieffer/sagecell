@@ -128,8 +128,9 @@ function requestInfo(cm) {
     }
 }
 
-function render(editorType, inputLocation, collapse) {
+function render(cellInfo, inputLocation, collapse) {
     var commands = inputLocation.find(".sagecell_commands");
+    var editorType = cellInfo.editorType;
     var editorData;
     if (collapse !== undefined) {
         var header, code;
@@ -209,6 +210,7 @@ function render(editorType, inputLocation, collapse) {
         editorData = CodeMirror.fromTextArea(commands.get(0), {
             autoRefresh: true,
             mode: sagecell.modes[mode],
+            theme: cellInfo.theme || 'default',
             viewportMargin: Infinity,
             indentUnit: 4,
             lineNumbers: true,
