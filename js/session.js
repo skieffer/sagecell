@@ -114,7 +114,7 @@ function Session(outputDiv, language, interact_vals, k, linked) {
 
         this.kernel.start({CellSessionID: utils.cellSessionID(), timeout: linked ? 'inf' : 0, accepted_tos : "true"});
     }
-    var pl_button, pl_box, pl_zlink, pl_qlink, pl_qrcode, pl_chkbox;
+    var pl_button, pl_box, pl_zlink, pl_qlink, pl_chkbox;
     this.outputDiv.find(".sagecell_output").prepend(
         this.session_container = ce("div", {"class": "sagecell_sessionContainer"}, [
             ce("div", {"class": "sagecell_permalink"}, [
@@ -126,12 +126,6 @@ function Session(outputDiv, language, interact_vals, k, linked) {
                     ce("div", {}, [pl_qlink = ce("a", {
                         "title": "Shortened link that will only work on this server"
                     }, ["Short temporary link"])]),
-                    ce("div", {}, [ce("a", {}, [
-                        pl_qrcode = ce("img", {
-                            "title": "QR code that will only work on this server",
-                            "alt": ""
-                        })
-                    ])]),
                     this.interact_pl = ce("label", {}, [
                         "Share interact state",
                         pl_chkbox = ce("input", {"type": "checkbox"})
@@ -166,7 +160,6 @@ function Session(outputDiv, language, interact_vals, k, linked) {
     var n = 0;
     var code_links = {}, interact_links = {};
     var that = this;
-    var qr_prefix = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=";
     this.updateLinks = function(new_vals) {
         if (new_vals) {
             interact_links = {};
@@ -178,8 +171,6 @@ function Session(outputDiv, language, interact_vals, k, linked) {
         if (links.zip === undefined) {
             pl_zlink.removeAttribute("href");
             pl_qlink.removeAttribute("href");
-            pl_qrcode.parentNode.removeAttribute("href");
-            pl_qrcode.removeAttribute("src");
             console.debug('sending permalink request post:', that.timer());
             var args = {
                 "code": that.rawcode,
@@ -221,13 +212,10 @@ function Session(outputDiv, language, interact_vals, k, linked) {
                     links.zip += "&interacts=" + data.interacts;
                 }
                 pl_zlink.href = links.zip;
-                pl_qrcode.parentNode.href = links.query;
-                pl_qrcode.src = qr_prefix + links.query;
             });
         } else {
-            pl_qlink.href = pl_qrcode.parentNode.href = links.query;
+            pl_qlink.href = links.query;
             pl_zlink.href = links.zip;
-            pl_qrcode.src = qr_prefix + links.query;
         }
     };
     pl_button.addEventListener("click", function() {
