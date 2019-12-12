@@ -1,16 +1,3 @@
-// TODO: put this tracking code in a site-specific file.
-// TODO: finish implementing our own stats service that handles,
-//       the phone apps, for example.
-var _gaq = _gaq || [];
-_gaq.push(['sagecell._setAccount', 'UA-29124745-1']);
-_gaq.push(['sagecell._setDomainName', 'sagemath.org']);
-_gaq.push(['sagecell._trackPageview']);
-
-(function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
 
 (function() {
 "use strict";

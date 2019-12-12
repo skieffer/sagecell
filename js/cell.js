@@ -211,7 +211,6 @@ function make(args, cellInfo, k) {
     if (hide.indexOf('fullScreen') != -1) {
         input.find('.sagecell_fullScreen').css("display", "none");
     }
-    _gaq.push(['sagecell._trackEvent', 'SageCell', 'Make',window.location.origin+window.location.pathname]);
 }
 
 
@@ -338,7 +337,6 @@ function init(cellInfo, k) {
         if (editorType.lastIndexOf('codemirror',0) === 0 /* efficient .startswith('codemirror')*/ ) {
             editorData.save();
         }
-        _gaq.push(['sagecell._trackEvent', 'SageCell', 'Execute',window.location.origin+window.location.pathname]);
 
         var code = input.find(".sagecell_commands").val();
         var language = langSelect[0].value;
