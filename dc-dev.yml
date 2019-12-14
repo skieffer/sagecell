@@ -1,0 +1,10 @@
+version: '3'
+services:
+  sagecell:
+    image: "luisjba/sagecell:latest"
+    ports:
+      - "7243:8888"
+    volumes:
+      - ~/sagemath/myfork-sagecell/static/embedded_sagecell.js:/home/sage/sagecell/static/embedded_sagecell.js:ro
+    environment:
+      SAGECELL_REQUIRE_TOS: "False"
