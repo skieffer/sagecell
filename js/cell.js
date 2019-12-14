@@ -127,11 +127,14 @@ function make(args, cellInfo, k) {
         cellInfo.defaultLanguage = cellInfo.languages[0];
     }
     /*
-    // Let's see the languages dropdown even if only one language is allowed.
-    // This is useful so we know what language we are using.
+    // $$$before
     if (cellInfo.languages.length === 1) {
         hide.push("language");
     }
+    // $$$after
+    // Let's see the languages dropdown even if only one language is allowed.
+    // This is useful so we know what language we are using.
+    // $$$end
     */
     if (cellInfo.linked) {
         hide.push("permalink");
