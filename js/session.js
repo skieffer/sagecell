@@ -420,6 +420,7 @@ Session.prototype.handle_execute_reply = function(msg) {
 
 Session.prototype.handle_output = function(msg, default_block_id) {
     console.debug("handle_output");
+    console.debug(msg);
     var msg_type = msg.header.msg_type;
     var content = msg.content;
     var metadata = msg.metadata;
@@ -436,10 +437,25 @@ Session.prototype.handle_output = function(msg, default_block_id) {
         var last = block.children().last();
         var last_output = (last.length === 0 ? undefined : last);
         if (last_output && last_output.hasClass("sagecell_" + content.name)) {
+            // TODO: handle this case for MathJax typesetting.
             last_output.text(last_output.text() + content.text);
         } else {
+            // Let's split the output into lines, and format for MathJax typesetting.
+            // $$$ before
+            /*
             var html = ce('pre', {class: 'sagecell_' + content.name},
                              [content.text]);
+            */
+            // $$$ after
+            var lines = content.text.split('\n');
+            var line_divs = [];
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                var line_div = ce('div', {class: 'sageoutputline'}, [line]);
+                line_divs.push(line_div);
+            }
+            var html = ce('div', {class: 'sagecell_' + content.name}, line_divs);
+            // $$$ end
             this.output(html, block_id);
         }
         break;
