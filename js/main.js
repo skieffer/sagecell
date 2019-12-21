@@ -31,16 +31,16 @@ require(['cell'], function(cell_arg) {
     console.debug('cell set');
 });
 sagecell.makeSagecell = function(args) {
-    console.info('sagecell.makeSagecell called');
+    //console.info('sagecell.makeSagecell called');
     var cellInfo = {};
     if (cell) {
         cell.make(args, cellInfo);
-        console.info('sagecell.makeSagecell finished');
+        //console.info('sagecell.makeSagecell finished');
     } else {
         setTimeout(function tryAgain() {
             if (cell) {
                 cell.make(args, cellInfo);
-                console.info('sagecell.makeSagecell finished after delay');
+                //console.info('sagecell.makeSagecell finished after delay');
             } else {
                 setTimeout(tryAgain);
             }
