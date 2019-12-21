@@ -431,29 +431,31 @@ Session.prototype.handle_output = function(msg, default_block_id) {
     // Handle each stream type.  This should probably be separated out into different functions.
     switch (msg_type) {
     case "stream":
-        // First, see if we should consolidate this output with the previous output <pre>
-        // this reaches into the inner workings of output
+        // Let's split the output into lines, and format for MathJax typesetting.
+        var lines = content.text.split('\n');
+        var line_divs = [];
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (line.length > 0) {
+                var line_div = ce('div', {class: 'sageoutputline'}, [line]);
+                line_divs.push(line_div);
+            }
+        }
+        // Now check if we should consolidate this output with the previous output
         var block = $(block_id === null ? this.output_block : interacts[block_id].output_block);
         var last = block.children().last();
         var last_output = (last.length === 0 ? undefined : last);
         if (last_output && last_output.hasClass("sagecell_" + content.name)) {
-            // TODO: handle this case for MathJax typesetting.
-            last_output.text(last_output.text() + content.text);
-        } else {
-            // Let's split the output into lines, and format for MathJax typesetting.
             // $$$ before
-            /*
-            var html = ce('pre', {class: 'sagecell_' + content.name},
-                             [content.text]);
-            */
+            //last_output.text(last_output.text() + content.text);
             // $$$ after
-            var lines = content.text.split('\n');
-            var line_divs = [];
-            for (var i = 0; i < lines.length; i++) {
-                var line = lines[i];
-                var line_div = ce('div', {class: 'sageoutputline'}, [line]);
-                line_divs.push(line_div);
-            }
+            last_output.append(line_divs);
+            // $$$ end
+        } else {
+            // $$$ before
+            //var html = ce('pre', {class: 'sagecell_' + content.name},
+            //                 [content.text]);
+            // $$$ after
             var html = ce('div', {class: 'sagecell_' + content.name}, line_divs);
             // $$$ end
             this.output(html, block_id);
